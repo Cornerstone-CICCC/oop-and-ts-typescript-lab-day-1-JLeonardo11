@@ -15,21 +15,17 @@ const MovieGenre = {
   SciFi: 4
 };
 
-// 2. Tuple Type for Seat
 type Seat = [string, number];
 
-// 3. Movie Type Definition
 type Movie = {
   movieId: number;
   title: string;
-  genre: number; // Using number instead of MovieGenre for ES5 compatibility
+  genre: number; 
   availableSeats: Seat[];
 };
 
-// Movies array to store movie data
 const movies: Movie[] = [];
 
-// 4. Function to Add a Movie
 function addMovie(movieId: number, title: string, genre: number, availableSeats: Seat[]): Movie {
   if (genre < 0 || genre > 4) {
     throw new Error("Invalid genre! Choose from: Action, Comedy, Drama, Horror, SciFi.");
@@ -40,7 +36,6 @@ function addMovie(movieId: number, title: string, genre: number, availableSeats:
   return movie;
 }
 
-// Helper function to Get a Movie by ID
 function getMovieById(movieId: number): Movie | null {
   for (let i = 0; i < movies.length; i++) {
     if (movies[i].movieId === movieId) {
@@ -50,14 +45,12 @@ function getMovieById(movieId: number): Movie | null {
   return null;
 }
 
-// 5. Function to Book a Seat
 function bookSeat(movieId: number, rowLetter: string, seatNumber: number): string {
   const movie = getMovieById(movieId);
   if (!movie) {
     return "Movie not found";
   }
 
-  // Loop to find the seat index
   let seatIndex = -1;
   for (let i = 0; i < movie.availableSeats.length; i++) {
     if (movie.availableSeats[i][0] === rowLetter && movie.availableSeats[i][1] === seatNumber) {
@@ -74,7 +67,6 @@ function bookSeat(movieId: number, rowLetter: string, seatNumber: number): strin
   return `Seat ${rowLetter}${seatNumber} booked successfully`;
 }
 
-// 6. Function to Check Seat Availability
 function checkSeatAvailability(movieId: number, rowLetter: string, seatNumber: number): boolean {
   const movie = getMovieById(movieId);
   if (!movie) {

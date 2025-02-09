@@ -15,18 +15,16 @@ var BookGenre = {
   NonFiction: 4
 };
 
-// 2. Create a type alias called Book which contains: bookId (number), title (string), author (string), genre (BookGenre), isAvailable (boolean).
 type Book = {
   bookId: number;
   title: string;
   author: string;
-  genre: number; // Use numeric value for BookGenre
+  genre: number; 
   isAvailable: boolean;
 };
 
 var library: Book[] = [];
 
-// 3. Create a function called addBook which will add a new book into the library array. The function needs to return a Book object.
 function addBook(bookId: number, title: string, author: string, genre: number): Book {
   if (genre < 0 || genre > 4) {
     throw new Error("Invalid genre! Choose from: Fantasy, Mystery, ScienceFiction, Romance, NonFiction.");
@@ -37,7 +35,6 @@ function addBook(bookId: number, title: string, author: string, genre: number): 
   return newBook;
 }
 
-// 4. Create a function called borrowBook which will change the book’s availability to false if available. The return needs to be a string.
 function borrowBook(bookId: number): string {
   var book = getBookById(bookId);
   if (!book) return "Book not found";
@@ -47,7 +44,6 @@ function borrowBook(bookId: number): string {
   return book.title + " has been borrowed";
 }
 
-// 5. Create a function called returnBook which will change the book’s availability to true. The return needs to be a string.
 function returnBook(bookId: number): string {
   var book = getBookById(bookId);
   if (!book) return "Book not found";
@@ -56,13 +52,11 @@ function returnBook(bookId: number): string {
   return book.title + " has been returned";
 }
 
-// 6. Create a function called checkAvailability which will return true if the book is available and false otherwise.
 function checkAvailability(bookId: number): boolean {
   var book = getBookById(bookId);
   return book ? book.isAvailable : false;
 }
 
-// 7. Create a function called removeBook which will remove a book from the library array. The return needs to be a string.
 function removeBook(bookId: number): string {
   var index = -1;
   for (var i = 0; i < library.length; i++) {
@@ -78,7 +72,6 @@ function removeBook(bookId: number): string {
   return removedBook.title + " has been removed from the library";
 }
 
-// Helper function to get a book by its ID
 function getBookById(bookId: number): Book | null {
   for (var i = 0; i < library.length; i++) {
     if (library[i].bookId === bookId) {

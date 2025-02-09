@@ -14,9 +14,7 @@ var MovieGenre = {
     Horror: 3,
     SciFi: 4
 };
-// Movies array to store movie data
 var movies = [];
-// 4. Function to Add a Movie
 function addMovie(movieId, title, genre, availableSeats) {
     if (genre < 0 || genre > 4) {
         throw new Error("Invalid genre! Choose from: Action, Comedy, Drama, Horror, SciFi.");
@@ -25,7 +23,6 @@ function addMovie(movieId, title, genre, availableSeats) {
     movies.push(movie);
     return movie;
 }
-// Helper function to Get a Movie by ID
 function getMovieById(movieId) {
     for (var i = 0; i < movies.length; i++) {
         if (movies[i].movieId === movieId) {
@@ -34,13 +31,11 @@ function getMovieById(movieId) {
     }
     return null;
 }
-// 5. Function to Book a Seat
 function bookSeat(movieId, rowLetter, seatNumber) {
     var movie = getMovieById(movieId);
     if (!movie) {
         return "Movie not found";
     }
-    // Loop to find the seat index
     var seatIndex = -1;
     for (var i = 0; i < movie.availableSeats.length; i++) {
         if (movie.availableSeats[i][0] === rowLetter && movie.availableSeats[i][1] === seatNumber) {
@@ -54,7 +49,6 @@ function bookSeat(movieId, rowLetter, seatNumber) {
     movie.availableSeats.splice(seatIndex, 1);
     return "Seat ".concat(rowLetter).concat(seatNumber, " booked successfully");
 }
-// 6. Function to Check Seat Availability
 function checkSeatAvailability(movieId, rowLetter, seatNumber) {
     var movie = getMovieById(movieId);
     if (!movie) {

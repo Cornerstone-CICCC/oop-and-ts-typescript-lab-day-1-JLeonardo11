@@ -15,7 +15,6 @@ var BookGenre = {
     NonFiction: 4
 };
 var library = [];
-// 3. Create a function called addBook which will add a new book into the library array. The function needs to return a Book object.
 function addBook(bookId, title, author, genre) {
     if (genre < 0 || genre > 4) {
         throw new Error("Invalid genre! Choose from: Fantasy, Mystery, ScienceFiction, Romance, NonFiction.");
@@ -24,7 +23,6 @@ function addBook(bookId, title, author, genre) {
     library.push(newBook);
     return newBook;
 }
-// 4. Create a function called borrowBook which will change the book’s availability to false if available. The return needs to be a string.
 function borrowBook(bookId) {
     var book = getBookById(bookId);
     if (!book)
@@ -34,7 +32,6 @@ function borrowBook(bookId) {
     book.isAvailable = false;
     return book.title + " has been borrowed";
 }
-// 5. Create a function called returnBook which will change the book’s availability to true. The return needs to be a string.
 function returnBook(bookId) {
     var book = getBookById(bookId);
     if (!book)
@@ -42,12 +39,10 @@ function returnBook(bookId) {
     book.isAvailable = true;
     return book.title + " has been returned";
 }
-// 6. Create a function called checkAvailability which will return true if the book is available and false otherwise.
 function checkAvailability(bookId) {
     var book = getBookById(bookId);
     return book ? book.isAvailable : false;
 }
-// 7. Create a function called removeBook which will remove a book from the library array. The return needs to be a string.
 function removeBook(bookId) {
     var index = -1;
     for (var i = 0; i < library.length; i++) {
@@ -61,7 +56,6 @@ function removeBook(bookId) {
     var removedBook = library.splice(index, 1)[0];
     return removedBook.title + " has been removed from the library";
 }
-// Helper function to get a book by its ID
 function getBookById(bookId) {
     for (var i = 0; i < library.length; i++) {
         if (library[i].bookId === bookId) {
