@@ -6,15 +6,12 @@
 // 4. Implement a function `getTransactionHistory` that returns the list of transactions for an account.
 // 5. Implement a function `checkActiveStatus` that returns the active status of an account number.
 // 6. Implement a function `closeAccount` that removes an account from the array and returns a confirmation string.
-// 1. TransactionType enum for deposit and withdrawal types.
 var TransactionType;
 (function (TransactionType) {
     TransactionType[TransactionType["Deposit"] = 0] = "Deposit";
     TransactionType[TransactionType["Withdraw"] = 1] = "Withdraw";
 })(TransactionType || (TransactionType = {}));
-// Array to store all bank accounts.
 var accounts = [];
-// 1. Create an account function
 function createAccount(accountNo, firstname, lastname, initialDeposit, isActive) {
     if (isActive === void 0) { isActive = true; }
     var newAccount = {
@@ -28,7 +25,6 @@ function createAccount(accountNo, firstname, lastname, initialDeposit, isActive)
     accounts.push(newAccount);
     return newAccount;
 }
-// 2. Process transaction (deposit/withdraw)
 function processTransaction(accountNo, amount, transactionType) {
     var account = findAccount(accountNo);
     if (!account)
@@ -46,22 +42,18 @@ function processTransaction(accountNo, amount, transactionType) {
     account.transactions.push({ accountNo: accountNo, amount: amount, type: transactionType });
     return amount + " " + (transactionType === TransactionType.Deposit ? "deposited into" : "withdrawn from") + " account number " + accountNo;
 }
-// 3. Get account balance
 function getBalance(accountNo) {
     var account = findAccount(accountNo);
     return account ? account.balance : "Account not found";
 }
-// 4. Get transaction history
 function getTransactionHistory(accountNo) {
     var account = findAccount(accountNo);
     return account ? account.transactions : "Account not found";
 }
-// 5. Check if the account is active
 function checkActiveStatus(accountNo) {
     var account = findAccount(accountNo);
     return account ? account.isActive : "Account not found";
 }
-// 6. Close account
 function closeAccount(accountNo) {
     var index = findAccountIndex(accountNo);
     if (index === -1)
@@ -69,7 +61,6 @@ function closeAccount(accountNo) {
     accounts.splice(index, 1);
     return "Account number " + accountNo + " closed";
 }
-// Helper function to find an account by account number
 function findAccount(accountNo) {
     for (var i = 0; i < accounts.length; i++) {
         if (accounts[i].accountNo === accountNo) {
@@ -78,7 +69,6 @@ function findAccount(accountNo) {
     }
     return undefined;
 }
-// Helper function to find an account index by account number
 function findAccountIndex(accountNo) {
     for (var i = 0; i < accounts.length; i++) {
         if (accounts[i].accountNo === accountNo) {
@@ -87,16 +77,6 @@ function findAccountIndex(accountNo) {
     }
     return -1;
 }
-// Test cases
-console.log(createAccount(1, "John", "Smith", 100));
-console.log(processTransaction(1, 50, TransactionType.Deposit));
-console.log(processTransaction(1, 20, TransactionType.Withdraw));
-console.log(processTransaction(1, 500, TransactionType.Withdraw));
-console.log(getBalance(1));
-console.log(getTransactionHistory(1));
-console.log(checkActiveStatus(1));
-console.log(closeAccount(1));
-console.log(getBalance(1)); // Should return "Account not found"
 // Test cases (students should add more)
 console.log(createAccount(1, "John", "Smith", 100)); // { accountNo: 1, firstname: "John", lastname: "Smith", balance: 100, isActive: true, transactions: [] }
 console.log(processTransaction(1, 50, TransactionType.Deposit)); // "50 deposited into account number 1"

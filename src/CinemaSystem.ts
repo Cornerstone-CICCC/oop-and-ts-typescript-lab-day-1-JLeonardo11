@@ -6,27 +6,32 @@
 // 5. Create a function called bookSeat which removes a seat from availableSeats if available. The return needs to be a string.
 // 6. Create a function called checkSeatAvailability which returns true if a seat is available and false otherwise.
 
-enum MovieGenre {
-  Action,
-  Comedy,
-  Drama,
-  Horror,
-  SciFi
-}
+// 1. Define an enum for MovieGenre.
+const MovieGenre = {
+  Action: 0,
+  Comedy: 1,
+  Drama: 2,
+  Horror: 3,
+  SciFi: 4
+};
 
+// 2. Tuple Type for Seat
 type Seat = [string, number];
 
+// 3. Movie Type Definition
 type Movie = {
   movieId: number;
   title: string;
-  genre: MovieGenre;
+  genre: number; // Using number instead of MovieGenre for ES5 compatibility
   availableSeats: Seat[];
 };
 
+// Movies array to store movie data
 const movies: Movie[] = [];
 
-function addMovie(movieId: number, title: string, genre: MovieGenre, availableSeats: Seat[]): Movie {
-  if (!(genre in MovieGenre)) {
+// 4. Function to Add a Movie
+function addMovie(movieId: number, title: string, genre: number, availableSeats: Seat[]): Movie {
+  if (genre < 0 || genre > 4) {
     throw new Error("Invalid genre! Choose from: Action, Comedy, Drama, Horror, SciFi.");
   }
 
@@ -35,19 +40,31 @@ function addMovie(movieId: number, title: string, genre: MovieGenre, availableSe
   return movie;
 }
 
+// Helper function to Get a Movie by ID
 function getMovieById(movieId: number): Movie | null {
-  return movies.filter((movie) => movie.movieId === movieId) || null;
+  for (let i = 0; i < movies.length; i++) {
+    if (movies[i].movieId === movieId) {
+      return movies[i];
+    }
+  }
+  return null;
 }
 
+// 5. Function to Book a Seat
 function bookSeat(movieId: number, rowLetter: string, seatNumber: number): string {
   const movie = getMovieById(movieId);
   if (!movie) {
     return "Movie not found";
   }
 
-  const seatIndex = movie.availableSeats.findIndex(
-    (seat) => seat[0] === rowLetter && seat[1] === seatNumber
-  );
+  // Loop to find the seat index
+  let seatIndex = -1;
+  for (let i = 0; i < movie.availableSeats.length; i++) {
+    if (movie.availableSeats[i][0] === rowLetter && movie.availableSeats[i][1] === seatNumber) {
+      seatIndex = i;
+      break;
+    }
+  }
 
   if (seatIndex === -1) {
     return `Seat ${rowLetter}${seatNumber} is not available`;
@@ -57,16 +74,23 @@ function bookSeat(movieId: number, rowLetter: string, seatNumber: number): strin
   return `Seat ${rowLetter}${seatNumber} booked successfully`;
 }
 
+// 6. Function to Check Seat Availability
 function checkSeatAvailability(movieId: number, rowLetter: string, seatNumber: number): boolean {
   const movie = getMovieById(movieId);
   if (!movie) {
     return false;
   }
 
-  return movie.availableSeats.some((seat) => seat[0] === rowLetter && seat[1] === seatNumber);
+  for (let i = 0; i < movie.availableSeats.length; i++) {
+    if (movie.availableSeats[i][0] === rowLetter && movie.availableSeats[i][1] === seatNumber) {
+      return true;
+    }
+  }
+  return false;
 }
 
-//Test cases
+
+// Test cases (Create more if needed)
 console.log(addMovie(1, "Avengers", MovieGenre.Action, [["A", 1], ["A", 2]])) // { movieId: 1, title: "Avengers", genre: MovieGenre.Action, availableSeats: [["A", 1], ["A", 2]] }
 console.log(bookSeat(1, "A", 1)) // "Seat A1 booked successfully"
 console.log(checkSeatAvailability(1, "A", 1)) // false
