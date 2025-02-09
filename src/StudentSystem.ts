@@ -9,27 +9,51 @@
 type StudentStatus = "active" | "graduated" | "dropped";
 
 type Student = {
+  studentId: number;
+  name: string;
+  age: number;
+  subjects: string[];
+  status: StudentStatus;
+};
 
+var students: Student[] = [];
+
+function addStudent(studentId: number, name: string, age: number, subjects: string[], status: StudentStatus): Student {
+  var student: Student = { studentId: studentId, name: name, age: age, subjects: subjects, status: status };
+  students.push(student);
+  return student;
 }
 
-const students: Student[] = [];
-
-function addStudent(studentId, name, age, subjects, status) {
-
+function updateStatus(studentId: number, status: StudentStatus): string {
+  var student = findStudent(studentId);
+  if (student) {
+    student.status = status;
+    return student.name + " has " + status;
+  }
+  return "Student not found";
 }
 
-function updateStatus(studentId, status) {
-
+function addSubject(studentId: number, subject: string): string {
+  var student = findStudent(studentId);
+  if (student) {
+    student.subjects.push(subject);
+    return subject + " added to " + student.name + "'s subjects";
+  }
+  return "Student not found";
 }
 
-function addSubject(studentId, subject) {
-
+function getStudent(studentId: number): Student | undefined {
+  return findStudent(studentId);
 }
 
-function getStudent(studentId) {
-
+function findStudent(studentId: number): Student | undefined {
+  for (var i = 0; i < students.length; i++) {
+    if (students[i].studentId === studentId) {
+      return students[i];
+    }
+  }
+  return undefined;
 }
-
 // Test cases (Create more if needed)
 console.log(addStudent(1, "Alice", 20, ["Math", "Science"], "active")) // { studentId: 1, name: "Alice", age: 20, subjects: ["Math", "Science"], status: "active" }
 console.log(updateStatus(1, "graduated")) // "Alice has graduated"

@@ -5,24 +5,56 @@
 // 4. Create a function called updateStock which updates the quantity of an item. The return needs to be a string.
 // 5. Create a function called checkStock which returns true if the item is available and false otherwise.
 
-type ItemDetails = [string, number, boolean]
+
+type ItemDetails = [string, number, boolean];
+
 
 type InventoryItem = {
+  itemId: number;
+  details: ItemDetails;
+};
 
+var inventory: InventoryItem[] = [];
+
+
+function addItem(
+  itemId: number,
+  itemName: string,
+  quantity: number,
+  isAvailable: boolean
+): InventoryItem {
+  var newItem: InventoryItem = {
+    itemId: itemId,
+    details: [itemName, quantity, isAvailable],
+  };
+  inventory.push(newItem);
+  return newItem;
 }
 
-const inventory: InventoryItem[] = [];
-
-function addItem(itemId, itemName, quantity, isAvailable) {
-
+function getItemById(itemId: number): InventoryItem | null {
+  for (var i = 0; i < inventory.length; i++) {
+    if (inventory[i].itemId === itemId) {
+      return inventory[i];
+    }
+  }
+  return null;
 }
 
-function updateStock(itemId, quantity) {
+function updateStock(itemId: number, quantity: number): string {
+  var item = getItemById(itemId);
+  if (!item) {
+    return "Item with ID " + itemId + " not found";
+  }
 
+  item.details[1] = quantity;
+  item.details[2] = quantity > 0;
+
+  return "Stock updated for " + item.details[0] + ", new quantity: " + quantity;
 }
 
-function checkStock(itemId) {
-
+function checkStock(itemId: number): boolean {
+  var item = getItemById(itemId);
+  return item ? item.details[2] : false;
 }
 
 // Test cases (Create more if needed)
